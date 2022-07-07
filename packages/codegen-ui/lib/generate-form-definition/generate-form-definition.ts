@@ -25,7 +25,7 @@ import {
 } from './helpers';
 import {
   StudioForm,
-  DataStoreModelField,
+  DataStoreModelInfo,
   SectionalElement,
   StudioFormFieldConfig,
   FormDefinition,
@@ -39,13 +39,14 @@ import {
  * @param form StudioForm, converted from the API shape.
  * @param modelInfo (Optional) holds type information about the DataStore model fields being represented.
  * @returns a definition that translates to rendered JSX elements.
+ * TODO: Change to use generic data schema
  */
 export function generateFormDefinition({
   form,
   modelInfo,
 }: {
   form: StudioForm;
-  modelInfo?: { fields: DataStoreModelField[] };
+  modelInfo?: DataStoreModelInfo;
 }): FormDefinition {
   const formDefinition: FormDefinition = {
     form: { layoutStyle: {} },
@@ -55,6 +56,7 @@ export function generateFormDefinition({
   };
 
   const modelFieldsConfigs: ModelFieldsConfigs = {};
+
   if (modelInfo) {
     modelInfo.fields.forEach((field) => {
       addDataStoreModelField(formDefinition, modelFieldsConfigs, field);

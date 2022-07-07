@@ -15,7 +15,7 @@
  */
 
 import { addDataStoreModelField } from '../../../generate-form-definition/helpers';
-import { FormDefinition, ModelFieldsConfigs } from '../../../types';
+import { FormDefinition, ModelFieldsConfigs, ModelField } from '../../../types';
 
 describe('addDataStoreModelField', () => {
   it('should map to elementMatrix and add to modelFieldsConfigs', () => {
@@ -26,7 +26,13 @@ describe('addDataStoreModelField', () => {
       elementMatrix: [],
     };
 
-    const dataStoreModelField = { name: 'name', type: 'String', isReadOnly: false, isRequired: false, isArray: false };
+    const dataStoreModelField: ModelField = {
+      name: 'name',
+      type: 'String',
+      isReadOnly: false,
+      isRequired: false,
+      isArray: false,
+    };
 
     const modelFieldsConfigs: ModelFieldsConfigs = {};
 
@@ -47,7 +53,13 @@ describe('addDataStoreModelField', () => {
       elementMatrix: [],
     };
 
-    const dataStoreModelField = { name: 'name', type: 'String', isReadOnly: false, isRequired: false, isArray: true };
+    const dataStoreModelField: ModelField = {
+      name: 'name',
+      type: 'String',
+      isReadOnly: false,
+      isRequired: false,
+      isArray: true,
+    };
 
     expect(() => addDataStoreModelField(formDefinition, {}, dataStoreModelField)).toThrow();
   });
@@ -68,6 +80,7 @@ describe('addDataStoreModelField', () => {
       isArray: false,
     };
 
-    expect(() => addDataStoreModelField(formDefinition, {}, dataStoreModelField)).toThrow();
+    // adding any so no TypeError is thrown as opposed to a ValidationError
+    expect(() => addDataStoreModelField(formDefinition, {}, dataStoreModelField as any)).toThrow();
   });
 });
